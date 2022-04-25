@@ -1,0 +1,14 @@
+name: UUP linux workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      configlink:
+        required: true
+jobs:
+  make iso:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download config
+      run: wget ${{ github.event.inputs.configlink }}
