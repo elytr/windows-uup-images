@@ -6,7 +6,7 @@ on:
       configlink:
         required: true
 jobs:
-  make iso:
+  make_iso:
     runs-on: ubuntu-latest
 
     steps:
