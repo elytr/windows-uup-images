@@ -16,7 +16,7 @@ jobs:
     steps:
     - name: Prepare Build Environment
       run: |
-           sudo apt update -y && sudo apt install sudo apt install -y cabextract curl wimtools chntpw genisoimage 
+           sudo apt update -y && sudo apt install -y cabextract curl wimtools chntpw genisoimage 
            cd $HOME
            git clone https://github.com/linuxop/windows-images-ci
 
