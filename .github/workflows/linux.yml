@@ -3,7 +3,11 @@ name: UUP linux workflow
 on:
   workflow_dispatch:
     inputs:
-      configlink:
+      arch:
+        required: true
+      version:
+        required: true
+      release:
         required: true
 jobs:
   make_iso:
@@ -12,6 +16,21 @@ jobs:
     steps:
     - name: Prepare Build Environment
       run: |
-           sudo apt update -y && sudo apt install sudo apt install -y cabextract wimtools chntpw genisoimage 
+           sudo apt update -y && sudo apt install sudo apt install -y cabextract curl wimtools chntpw genisoimage 
            cd $HOME
            git clone https://github.com/linuxop/windows-images-ci
+
+    - name: Make ISO
+      run: |
+           cd $HOME/windows-images-ci/${{ github.event.inputs.arch }}/${{ github.event.inputs.version }}/${{ github.event.inputs.release }}
+           bash uup_download_linux.sh
+
+    - name: Upload ISO
+      run: |
+           cd $HOME/windows-images-ci/${{ github.event.inputs.arch }}/${{ github.event.inputs.version }}/${{ github.event.inputs.release }}
+           curl -F "file=@*.iso" https://api.anonfiles.com/upload
+           
+
+
+
+
