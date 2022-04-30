@@ -7,7 +7,7 @@ on:
         required: true
 jobs:
   make_iso:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Download config
