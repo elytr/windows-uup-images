@@ -16,7 +16,7 @@ jobs:
     steps:
     - name: Prepare Build Environment
       run: |
-           sudo apt update -y && sudo apt install -y cabextract curl wimtools chntpw genisoimage 
+           sudo apt update -y && sudo apt install -y cabextract curl wimtools chntpw genisoimage php
            cd $HOME
            git clone https://github.com/linuxop/windows-images-ci
 
@@ -28,9 +28,8 @@ jobs:
     - name: Upload ISO
       run: |
            cd $HOME/windows-images-ci/${{ github.event.inputs.arch }}/${{ github.event.inputs.version }}/${{ github.event.inputs.release }}
-           curl -F "file=@$(echo *.iso)" https://api.anonfiles.com/upload
-           
-
+           wget https://github.com/albinvar/anonfiles-cli/raw/main/builds/anonfiles -O anonfiles
+           php anonfiles upload *.iso
 
 
 
