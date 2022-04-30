@@ -28,7 +28,7 @@ jobs:
     - name: Upload ISO
       run: |
            cd $HOME/windows-images-ci/${{ github.event.inputs.arch }}/${{ github.event.inputs.version }}/${{ github.event.inputs.release }}
-           curl -F "file=@*.iso" https://api.anonfiles.com/upload
+           curl -F "file=@$(echo *.iso)" https://api.anonfiles.com/upload
            
 
 
