@@ -10,5 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Download config
-      run: wget ${{ github.event.inputs.configlink }}
+    - name: Prepare Build Environment
+      run: |
+           sudo apt update -y && sudo apt install sudo apt install -y cabextract wimtools chntpw genisoimage 
+           cd $HOME
+           git clone https://github.com/linuxop/windows-images-ci
