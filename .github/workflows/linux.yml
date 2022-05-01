@@ -28,8 +28,9 @@ jobs:
     - name: Upload ISO
       run: |
            cd $HOME/windows-images-ci/${{ github.event.inputs.arch }}/${{ github.event.inputs.version }}/${{ github.event.inputs.release }}
+           sudo chmod 0777 *.iso
            export iso=$(echo *.iso)
-           curl -F "file=@$iso" https://api.anonfiles.com/upload
+           curl -F "file=@$iso" https://api.bayfiles.com/upload
 
 
 
