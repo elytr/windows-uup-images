@@ -28,8 +28,9 @@ jobs:
     - name: Upload ISO
       run: |
            cd $HOME/windows-images-ci/${{ github.event.inputs.arch }}/${{ github.event.inputs.version }}/${{ github.event.inputs.release }}
-           wget https://github.com/albinvar/anonfiles-cli/raw/main/builds/anonfiles -O anonfiles
-           php anonfiles upload *.iso
+           export iso=$(echo *.iso)
+           curl -F "file=@$iso" https://api.anonfiles.com/upload
+
 
 
 
