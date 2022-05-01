@@ -1,4 +1,4 @@
-name: UUP linux workflow
+name: UUP windows workflow
 
 on:
   workflow_dispatch:
