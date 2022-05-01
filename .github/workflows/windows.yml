@@ -1,0 +1,34 @@
+name: UUP linux workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      arch:
+        required: true
+      version:
+        required: true
+      release:
+        required: true
+jobs:
+  make_iso:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: powershell
+
+    steps:
+    - name: Prepare Build Environment
+      run: git clone https://github.com/linuxop/windows-images-ci
+
+    - name: Make ISO
+      run: |
+           Set-Location .\windows-images-ci\${{ github.event.inputs.arch }}\${{ github.event.inputs.version }}\${{ github.event.inputs.release }}
+           .\uup_download_windows.cmd
+
+    - name: Upload ISO
+      run: |
+           Set-Location .\windows-images-ci\${{ github.event.inputs.arch }}\${{ github.event.inputs.version }}\${{ github.event.inputs.release }}
+           curl --upload-file "file=@*.ISO" https://api.bayfiles.com/upload
+
+
+
