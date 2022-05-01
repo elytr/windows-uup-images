@@ -1,0 +1,36 @@
+name: UUP macos workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      arch:
+        required: true
+      version:
+        required: true
+      release:
+        required: true
+jobs:
+  make_iso:
+    runs-on: macos-latest
+
+    steps:
+    - name: Prepare Build Environment
+      run: |
+           brew tap sidneys/homebrew
+           brew install aria2 cabextract wimlib cdrtools sidneys/homebrew/chntpw
+           cd $HOME
+           git clone https://github.com/linuxop/windows-images-ci
+
+    - name: Make ISO
+      run: |
+           cd $HOME/windows-images-ci/${{ github.event.inputs.arch }}/${{ github.event.inputs.version }}/${{ github.event.inputs.release }}
+           bash uup_download_macos.sh
+
+    - name: Upload ISO
+      run: |
+           cd $HOME/windows-images-ci/${{ github.event.inputs.arch }}/${{ github.event.inputs.version }}/${{ github.event.inputs.release }}
+           export iso=$(echo *.ISO)
+           curl -F "file=@$iso" https://api.bayfiles.com/upload
+
+
+
