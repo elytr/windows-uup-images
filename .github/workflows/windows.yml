@@ -28,7 +28,7 @@ jobs:
       run: |
             C:
             Set-Location .\windows-images-ci\${{ github.event.inputs.arch }}\${{ github.event.inputs.version }}\${{ github.event.inputs.release }}
-           .\uup_download_windows.cmd
+            .\uup_download_windows.cmd
 
     - name: Upload ISO
       run: |
