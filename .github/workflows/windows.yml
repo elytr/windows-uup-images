@@ -18,17 +18,23 @@ jobs:
 
     steps:
     - name: Prepare Build Environment
-      run: git clone https://github.com/linuxop/windows-images-ci
+      run: |
+           C:
+           git clone https://github.com/linuxop/windows-images-ci
+           Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+           choco install curl
 
     - name: Make ISO
       run: |
-           Set-Location .\windows-images-ci\${{ github.event.inputs.arch }}\${{ github.event.inputs.version }}\${{ github.event.inputs.release }}
+            C:
+            Set-Location .\windows-images-ci\${{ github.event.inputs.arch }}\${{ github.event.inputs.version }}\${{ github.event.inputs.release }}
            .\uup_download_windows.cmd
 
     - name: Upload ISO
       run: |
+           C:
            Set-Location .\windows-images-ci\${{ github.event.inputs.arch }}\${{ github.event.inputs.version }}\${{ github.event.inputs.release }}
-           curl --upload-file "file=@*.ISO" https://api.bayfiles.com/upload
+           curl.exe --upload-file "file=@*.ISO" https://api.bayfiles.com/upload
 
 
 
